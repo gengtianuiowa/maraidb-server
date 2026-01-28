@@ -1,0 +1,13 @@
+# Testing master_connect_retry with + sign (expected to work)
+CHANGE MASTER TO master_connect_retry=+60;
+# Success
+# Testing master_connect_retry without + sign (expected to work)
+CHANGE MASTER TO master_connect_retry=60;
+# Success
+# Testing master_heartbeat_period with + sign (should work)
+CHANGE MASTER TO master_heartbeat_period=+60;
+# Testing both without + sign (should work)
+CHANGE MASTER TO master_connect_retry=60;
+CHANGE MASTER TO master_heartbeat_period=60;
+# Success
+RESET SLAVE ALL;

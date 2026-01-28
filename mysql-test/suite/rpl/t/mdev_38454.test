@@ -1,0 +1,37 @@
+#
+# MDEV-38454: CHANGE MASTER TO master_heartbeat_period does not accept numbers with `+` sign
+#
+# Simple test to demonstrate the parser inconsistency has been fixed
+#
+
+#
+# Test master_connect_retry with explicit + sign (should work)
+#
+--echo # Testing master_connect_retry with + sign (expected to work)
+CHANGE MASTER TO master_connect_retry=+60;
+--echo # Success
+
+#
+# Test master_connect_retry without explicit + sign (should work)
+#
+--echo # Testing master_connect_retry without + sign (expected to work)
+CHANGE MASTER TO master_connect_retry=60;
+--echo # Success
+
+#
+# Test master_heartbeat_period with explicit + sign (should work after fix)
+#
+--echo # Testing master_heartbeat_period with + sign (should work)
+CHANGE MASTER TO master_heartbeat_period=+60;
+
+#
+# Test without + sign (should work for both)
+#
+--echo # Testing both without + sign (should work)
+CHANGE MASTER TO master_connect_retry=60;
+CHANGE MASTER TO master_heartbeat_period=60;
+--echo # Success
+
+
+# Reset
+RESET SLAVE ALL;
